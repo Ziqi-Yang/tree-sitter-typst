@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Usage:
+#  ./scripts/update_official_tests.py ~/projects/probe/typst ~/projects/probe/tree-sitter-typst-mine
 import os
 import sys
 import subprocess
@@ -128,6 +130,7 @@ def main(typst_repo, parser_repo):
 
     commit_id = None
     corpus_official_path = os.path.join(parser_repo, "corpus", CORPUS_OFFICIAL_DIR_NAME)
+    commit_file_path = os.path.join(corpus_official_path, "COMMIT")
     if not os.path.exists(corpus_official_path):
         print(f"Detect that there is no directory {corpus_official_path}.")
         answer = yn_question("Do you want to initialize the tests?")
@@ -136,7 +139,6 @@ def main(typst_repo, parser_repo):
         else:
             os.makedirs(corpus_official_path, exist_ok=True)
     else:
-        commit_file_path = os.path.join(corpus_official_path, "COMMIT")
         try:
             with open(commit_file_path, "r") as commit_file:
                 commit_id = commit_file.read().strip()
